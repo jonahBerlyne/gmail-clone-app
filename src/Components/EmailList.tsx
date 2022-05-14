@@ -1,13 +1,14 @@
 import React from 'react';
 import "../Styles/EmailList.css";
 import { Checkbox, IconButton } from '@mui/material';
-import { ArrowDropDown, Redo, MoreVert, ChevronLeft, ChevronRight, KeyboardHide, Settings } from '@mui/icons-material';
+import { ArrowDropDown, Redo, MoreVert, ChevronLeft, ChevronRight, KeyboardHide, Settings, Inbox, People, LocalOffer } from '@mui/icons-material';
+import Section from "./Section";
 
 export default function EmailList() {
   return (
     <div className='email-list'>
-      <div className="emailList-settings">
-        <div className="emailList-settings-left">
+      <div className="email-list-settings">
+        <div className="email-list-settings-left">
           <Checkbox />
 
           <IconButton>
@@ -23,7 +24,7 @@ export default function EmailList() {
           </IconButton>
         </div>
 
-        <div className="emailList-settings-right">
+        <div className="email-list-settings-right">
           <IconButton>
             <ChevronLeft />
           </IconButton>
@@ -38,8 +39,23 @@ export default function EmailList() {
           </IconButton>
         </div>
 
-        <div className="emailList-sections">
-          
+        <div className="email-list-sections">
+          <Section 
+            icon={<Inbox />}
+            title="Primary"
+            color="red"
+            selected
+          />
+          <Section 
+            icon={<People />}
+            title="Social"
+            color="#1A73E8"
+          />
+          <Section 
+            icon={<LocalOffer />}
+            title="Promotions"
+            color="green"
+          />
         </div>
 
       </div>
