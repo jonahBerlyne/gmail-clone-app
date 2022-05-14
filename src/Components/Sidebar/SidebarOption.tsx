@@ -1,7 +1,13 @@
 import React from 'react';
 import "../../Styles/SidebarOption.css";
 
-export default function SidebarOption() {
+interface Option {
+  icon: any;
+  title: string;
+  number: number;
+};
+
+export default function SidebarOption({ icon, title, number }: Option) {
   return (
     <div>SidebarOption</div>
   );
