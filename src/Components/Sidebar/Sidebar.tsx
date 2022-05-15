@@ -3,14 +3,20 @@ import "../../Styles/Sidebar.css";
 import { Button, IconButton } from "@mui/material";
 import { Add, Inbox, Star, AccessTime, LabelImportant, NearMe, Note, ExpandMore, Person, Duo, Phone } from "@mui/icons-material";
 import SidebarOption from "./SidebarOption";
+import { useAppDispatch } from '../../Redux/hooks';
+import { openSendMessage } from "../../Redux/Slices/mailSlice";
 
 export default function Sidebar() {
+
+  const dispatch = useAppDispatch();
+
   return (
     <div className='sidebar'>
       <Button
         startIcon={<Add />}
         style={{ fontSize: "large" }}
         className="sidebar-compose"
+        onClick={() => dispatch(openSendMessage())}
       >
         Compose
       </Button>

@@ -1,12 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useAppSelector } from './Redux/hooks';
 import "./Styles/App.css";
 import Header from "./Components/Header";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import EmailListPage from './Pages/EmailListPage';
 import MailPage from './Pages/MailPage';
+import SendMail from './Components/SendMail';
+import { selectSendMessageIsOpen } from "./Redux/Slices/mailSlice";
 
 export default function App() {
+
+  const sendMessageIsOpen: boolean = useAppSelector(selectSendMessageIsOpen);
+
   return (
     <Router>
       <div className="app">
@@ -17,6 +23,7 @@ export default function App() {
             <Route path="/" element={<EmailListPage />} />
             <Route path="/mail" element={<MailPage />} />
           </Routes>
+          {sendMessageIsOpen && <SendMail />}
         </div>
       </div>
     </Router>
