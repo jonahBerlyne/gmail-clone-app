@@ -2,10 +2,10 @@ import React from 'react';
 import "../Styles/EmailList.css";
 import { Checkbox, IconButton } from '@mui/material';
 import { ArrowDropDown, Redo, MoreVert, ChevronLeft, ChevronRight, KeyboardHide, Settings, Inbox, People, LocalOffer } from '@mui/icons-material';
-import Section from "./Section";
-import EmailRow from './EmailRow';
+import Section from "../Components/Section";
+import EmailRow from '../Components/EmailRow';
 
-export default function EmailList() {
+export default function EmailListPage() {
   return (
     <div className='email-list'>
 
@@ -40,26 +40,25 @@ export default function EmailList() {
             <Settings />
           </IconButton>
         </div>
+      </div>
 
-        <div className="email-list-sections">
-          <Section 
-            icon={<Inbox />}
-            title="Primary"
-            color="red"
-            selected
-          />
-          <Section 
-            icon={<People />}
-            title="Social"
-            color="#1A73E8"
-          />
-          <Section 
-            icon={<LocalOffer />}
-            title="Promotions"
-            color="green"
-          />
-        </div>
-
+      <div className="email-list-sections">
+        <Section 
+          icon={<Inbox />}
+          title="Primary"
+          color="red"
+          selected
+        />
+        <Section 
+          icon={<People />}
+          title="Social"
+          color="#1A73E8"
+        />
+        <Section 
+          icon={<LocalOffer />}
+          title="Promotions"
+          color="green"
+        />
       </div>
 
       <div className="email-list-rows">
