@@ -3,10 +3,12 @@ import "../Styles/EmailList.css";
 import { Checkbox, IconButton } from '@mui/material';
 import { ArrowDropDown, Redo, MoreVert, ChevronLeft, ChevronRight, KeyboardHide, Settings, Inbox, People, LocalOffer } from '@mui/icons-material';
 import Section from "./Section";
+import EmailRow from './EmailRow';
 
 export default function EmailList() {
   return (
     <div className='email-list'>
+
       <div className="email-list-settings">
         <div className="email-list-settings-left">
           <Checkbox />
@@ -59,6 +61,16 @@ export default function EmailList() {
         </div>
 
       </div>
+
+      <div className="email-list-rows">
+        <EmailRow 
+          title="Example title"
+          subject='Example subject'
+          description='Example description'
+          time="8pm"
+        />
+      </div>
+
     </div>
   );
 }
