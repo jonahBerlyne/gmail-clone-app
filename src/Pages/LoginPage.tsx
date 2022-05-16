@@ -31,6 +31,7 @@ export default function LoginPage() {
           variant="contained"
           color="primary"
           onClick={signIn}
+          sx={{ fontWeight: 400 }}
         >
           Login
         </Button>

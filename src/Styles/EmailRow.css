@@ -16,23 +16,13 @@
  display: flex;
 }
 
-.email-row-content {
+.email-row-message {
  display: flex;
  align-items: center;
  justify-content: space-between;
- width: 100%;
+ width: 82.5%;
  padding: 10px;
-}
-
-.email-row-content > .email-row-time {
- margin-right: 0px;
-}
-
-.email-row-message {
- display: flex;
- flex: 0.8;
- align-items: center;
- font-size: 13px;
+ gap: 20px;
 }
 
 .email-row-message > h4,
@@ -43,16 +33,15 @@
  text-overflow: ellipsis;
 }
 
-.email-row-title {
+.email-row-from {
  font-size: 13px;
  flex: 0.3;
+ margin-right: 100px;
 }
 
 .email-row-time {
- /* padding-right: 15px; */
  font-size: 9px;
  font-weight: bold;
- display: flex;
 }
 
 .email-row-description {

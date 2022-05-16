@@ -32,11 +32,22 @@
  position: relative;
 }
 
-.mail-body-header > h2 {
+.mail-body-header-info > h2 {
  font-weight: 400;
  margin-right: 20px;
  inline-size: 70%;
  overflow-wrap: break-word;
+}
+
+.mail-body-header-info {
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+}
+
+.mail-body-header-info > p {
+ color: gray;
+ font-size: 12.5px;
 }
 
 .mail-body-header > p {

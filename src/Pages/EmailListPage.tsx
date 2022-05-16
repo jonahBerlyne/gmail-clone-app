@@ -86,7 +86,7 @@ export default function EmailListPage() {
         {emails.map(email => {
           return (
             <EmailRow 
-              title={email.title}
+              from={email.from}
               subject={email.subject}
               msg={email.msg}
               time={new Date(email.timestamp?.seconds*1000).toUTCString()}

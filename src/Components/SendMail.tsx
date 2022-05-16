@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import "../Styles/SendMail.css";
 import { Button } from "@mui/material";
 import { Close } from '@mui/icons-material';
-import { useForm } from "react-hook-form";
 import { useAppDispatch } from '../Redux/hooks';
 import { closeSendMessage } from '../Redux/Slices/mailSlice';
-import fireDB from "../firebaseConfig";
+import fireDB, { auth } from "../firebaseConfig";
 import { addDoc, serverTimestamp, collection } from "firebase/firestore";
 
 export default function SendMail() {
@@ -21,6 +20,7 @@ export default function SendMail() {
      dispatch(closeSendMessage());
      const collectionRef = collection(fireDB, "email addresses", `${to}`, "emails");
      const emailDoc = {
+       "from": auth.currentUser?.email,
        to,
        subject,
        msg,

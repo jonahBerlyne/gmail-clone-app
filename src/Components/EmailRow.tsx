@@ -9,14 +9,14 @@ import { deleteDoc, doc } from 'firebase/firestore';
 import fireDB, { auth } from '../firebaseConfig';
 
 interface Row {
-  title: string;
+  from: string;
   subject: string;
   msg: string;
   time: string;
   id?: any;
 }
 
-export default function EmailRow({ title, subject, msg, time, id }: Row) {
+export default function EmailRow({ from, subject, msg, time, id }: Row) {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export default function EmailRow({ title, subject, msg, time, id }: Row) {
   const openMail = (): void => {
     dispatch(
       selectMail({
-        title, 
+        from, 
         subject, 
         msg, 
         time, 
@@ -57,22 +57,15 @@ export default function EmailRow({ title, subject, msg, time, id }: Row) {
           <Delete />
         </IconButton>
       </div>
-
-      <div className="email-row-content" onClick={openMail}>
-
-      {/* <h3 className="email-row-title">
-        {title}
-      </h3> */}
-
-      <div className="email-row-message">
-        <h4>{subject}{""}</h4>
-        <span className="email-row-description">{msg}</span>
-      </div>
-
-      <p className="email-row-time">
-        {time}
-      </p>
-
+      <div className="email-row-message" onClick={openMail}>
+          <h3 className="email-row-from">
+            {from}
+          </h3>
+          <h4>{subject}{""}</h4>
+          <span className="email-row-description">{msg}</span>
+          <p className="email-row-time">
+            {time}
+          </p>
       </div>
 
     </div>
