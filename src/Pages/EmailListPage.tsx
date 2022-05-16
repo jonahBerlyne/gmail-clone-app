@@ -1,11 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import "../Styles/EmailList.css";
 import { Checkbox, IconButton } from '@mui/material';
 import { ArrowDropDown, Redo, MoreVert, ChevronLeft, ChevronRight, KeyboardHide, Settings, Inbox, People, LocalOffer } from '@mui/icons-material';
 import Section from "../Components/Section";
 import EmailRow from '../Components/EmailRow';
+import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
+import fireDB from '../firebaseConfig';
 
 export default function EmailListPage() {
+
+  const [emails, setEmails] = useState<any[]>([]);
+
+  useEffect(() => {
+    const q = query(collection(fireDB, "emails"), orderBy("timestamp", "desc"));
+    const unsub = onSnapshot(q, snapshot => {
+      let emailsArr: any[] = [];
+      snapshot.docs.forEach(doc => {
+        const emailDoc = {
+          ...doc.data(),
+          id: doc.id
+        };
+        emailsArr.push(emailDoc);
+      });
+      setEmails(emailsArr);
+    });
+    return unsub;
+  }, []);
+
   return (
     <div className='email-list'>
 
@@ -62,12 +83,17 @@ export default function EmailListPage() {
       </div>
 
       <div className="email-list-rows">
-        <EmailRow 
-          title="Example title"
-          subject='Example subject'
-          description='Example description'
-          time="8pm"
-        />
+        {emails.map(email => {
+          return (
+            <EmailRow 
+              title={email.title}
+              subject={email.subject}
+              description={email.description}
+              time={new Date(email.timestamp?.seconds*1000).toUTCString()}
+              id={email.id}
+            />
+          );
+        })}
       </div>
 
     </div>
