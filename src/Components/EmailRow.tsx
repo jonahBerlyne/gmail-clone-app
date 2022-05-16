@@ -17,7 +17,7 @@ export default function EmailRow({ title, subject, description, time, id }: Row)
   const navigate = useNavigate();
 
   return (
-    <div className='email-row' onClick={() => navigate("/mail")}>
+    <div key={id} className='email-row' onClick={() => navigate("/mail")}>
 
       <div className="email-row-options">
         <Checkbox />
