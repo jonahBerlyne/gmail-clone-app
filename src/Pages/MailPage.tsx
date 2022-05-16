@@ -42,7 +42,6 @@ export default function MailPage() {
             <h2>{selectedMail?.subject}</h2>
             <p>{"<"}{selectedMail?.from}{">"}</p>
           </div>
-          <LabelImportant className="mail-important" />
           <p className='mail-time'>{selectedMail?.time}</p>
         </div>
 

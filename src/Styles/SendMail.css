@@ -20,11 +20,12 @@
  justify-content: space-between;
  align-items: center;
  color: gray;
+ font-family: 'Heebo', sans-serif;
 }
 
 .send-mail-header > h3 {
  color: whitesmoke;
- font-size: 13px;
+ font-size: 14px;
 }
 
 .send-mail-inputs {
@@ -39,6 +40,7 @@
  border: none;
  border-bottom: 1px solid whitesmoke;
  outline: none;
+ font-family: 'Heebo', sans-serif;
 }
 
 .send-mail-message {

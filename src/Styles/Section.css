@@ -7,6 +7,7 @@
  cursor: pointer;
  color: gray;
  border-width: 0 !important;
+ font-family: 'Noto Sans', sans-serif;
 }
 
 .section:hover {

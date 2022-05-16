@@ -1,6 +1,7 @@
 .mail {
  flex: 1;
  background-color: whitesmoke;
+ font-family: "Heebo", sans-serif;
 }
 
 .mail-tools {
@@ -52,10 +53,6 @@
 
 .mail-body-header > p {
  margin-left: 20px;
-}
-
-.mail-important {
- color: #e8ab02 !important;
 }
 
 .mail-message {

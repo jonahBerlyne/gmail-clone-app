@@ -26,7 +26,10 @@ export default function Sidebar() {
     <div className='sidebar'>
       <Button
         startIcon={<Add />}
-        style={{ fontSize: "large" }}
+        style={{ 
+          fontSize: "large"
+        }}
+        color="primary"
         className="sidebar-compose"
         onClick={() => dispatch(openSendMessage())}
       >

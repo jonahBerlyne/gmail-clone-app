@@ -21,7 +21,7 @@ export default function Header() {
 
       <div className="header-middle">
         <Search />
-        <input type="text" />
+        <input type="text" readOnly />
         <ArrowDropDown className="input-arrow" />
       </div>
 

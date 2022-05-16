@@ -35,7 +35,7 @@ export default function SendMail() {
   return (
     <div className='send-mail'>
      <div className="send-mail-header">
-      <h3>Message</h3>
+      <h3>New Message</h3>
       <Close 
         className="send-mail-close" 
         onClick={() => dispatch(closeSendMessage())}
@@ -45,7 +45,7 @@ export default function SendMail() {
      <div className="send-mail-inputs">
       <input placeholder='To' type="text" value={to} onChange={(e) => setTo(e.target.value)} maxLength={50} required />
       <input placeholder='Subject' type="text" value={subject} onChange={(e) => setSubject(e.target.value)} maxLength={50} required />
-      <textarea placeholder='Message...' className='send-mail-message' value={msg} onChange={(e) => setMsg(e.target.value)} required />
+      <textarea className='send-mail-message' value={msg} onChange={(e) => setMsg(e.target.value)} required />
       <div className="send-mail-options">
         <Button 
           className='send-mail-btn'

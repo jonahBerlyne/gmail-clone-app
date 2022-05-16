@@ -84,12 +84,13 @@ export default function EmailListPage() {
 
       <div className="email-list-rows">
         {emails.map(email => {
+          const date = new Date(email?.timestamp.seconds*1000);
           return (
             <EmailRow 
               from={email.from}
               subject={email.subject}
               msg={email.msg}
-              time={new Date(email.timestamp?.seconds*1000).toUTCString()}
+              time={`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`}
               key={email.id}
               id={email.id}
             />
