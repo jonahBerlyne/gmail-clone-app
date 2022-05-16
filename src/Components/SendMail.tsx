@@ -5,6 +5,8 @@ import { Close } from '@mui/icons-material';
 import { useForm } from "react-hook-form";
 import { useAppDispatch } from '../Redux/hooks';
 import { closeSendMessage } from '../Redux/Slices/mailSlice';
+import fireDB from "../firebaseConfig";
+import { addDoc, serverTimestamp, collection } from "firebase/firestore";
 
 export default function SendMail() {
 
@@ -17,8 +19,20 @@ export default function SendMail() {
    formState: { errors }
   } = useForm();
 
-  const onSubmit = (formData: any) => {
-   console.log(formData);
+  const sendMail = async (formData: any): Promise<any> => {
+   try {
+     const collectionRef = collection(fireDB, "emails");
+     const emailDoc = {
+       "to": formData.to,
+       "subject": formData.subject,
+       "message": formData.message,
+       "timestamp": serverTimestamp()
+     };
+     await addDoc(collectionRef, emailDoc);
+     dispatch(closeSendMessage());
+   } catch (err) {
+     alert(`Send mail error: ${err}`);
+   }
   }
 
   return (
@@ -31,13 +45,13 @@ export default function SendMail() {
       />
      </div>
 
-     <form onSubmit={handleSubmit(onSubmit)}>
-      <input placeholder='To' type="text" {...register("toRequired", { required: true })} />
-      {errors.toRequired && <p className="send-mail-error">Input required</p>}
-      <input placeholder='Subject' type="text" {...register("subjectRequired", { required: true })} />
-      {errors.subjectRequired && <p className="send-mail-error">Input required</p>}
-      <input placeholder='Message...' className='send-mail-message' type="text" {...register("messageRequired", { required: true })} />
-      {errors.messageRequired && <p className="send-mail-error">Input required</p>}
+     <form onSubmit={handleSubmit(sendMail)}>
+      <input placeholder='To' type="text" {...register("to", { required: true })} />
+      {errors.to && <p className="send-mail-error">Input required</p>}
+      <input placeholder='Subject' type="text" {...register("subject", { required: true })} />
+      {errors.subject && <p className="send-mail-error">Input required</p>}
+      <input placeholder='Message...' className='send-mail-message' type="text" {...register("message", { required: true })} />
+      {errors.message && <p className="send-mail-error">Input required</p>}
      </form>
 
      <div className="send-mail-options">
