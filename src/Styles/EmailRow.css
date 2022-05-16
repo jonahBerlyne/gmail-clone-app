@@ -16,6 +16,18 @@
  display: flex;
 }
 
+.email-row-content {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ width: 100%;
+ padding: 10px;
+}
+
+.email-row-content > .email-row-time {
+ margin-right: 0px;
+}
+
 .email-row-message {
  display: flex;
  flex: 0.8;
@@ -28,8 +40,6 @@
  white-space: nowrap;
  overflow: hidden;
  text-overflow: ellipsis;
- padding-left: 5px;
- padding-right: 5px;
 }
 
 .email-row-title {
@@ -38,9 +48,10 @@
 }
 
 .email-row-time {
- padding-right: 15px;
+ /* padding-right: 15px; */
  font-size: 9px;
  font-weight: bold;
+ display: flex;
 }
 
 .email-row-description {

@@ -5,14 +5,14 @@ import { ArrowDropDown, Redo, MoreVert, ChevronLeft, ChevronRight, KeyboardHide,
 import Section from "../Components/Section";
 import EmailRow from '../Components/EmailRow';
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
-import fireDB from '../firebaseConfig';
+import fireDB, { auth } from '../firebaseConfig';
 
 export default function EmailListPage() {
 
   const [emails, setEmails] = useState<any[]>([]);
-
+  
   useEffect(() => {
-    const q = query(collection(fireDB, "emails"), orderBy("timestamp", "desc"));
+    const q = query(collection(fireDB, "email addresses", `${auth.currentUser?.email}`, "emails"), orderBy("timestamp", "desc"));
     const unsub = onSnapshot(q, snapshot => {
       let emailsArr: any[] = [];
       snapshot.docs.forEach(doc => {
@@ -88,7 +88,7 @@ export default function EmailListPage() {
             <EmailRow 
               title={email.title}
               subject={email.subject}
-              description={email.description}
+              message={email.message}
               time={new Date(email.timestamp?.seconds*1000).toUTCString()}
               key={email.id}
               id={email.id}

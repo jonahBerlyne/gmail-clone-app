@@ -21,9 +21,9 @@ export default function App() {
   return (
     <Router>
       <div className="app">
-      <Header />
+      {user && <Header />}
         <div className="app-body">
-          <Sidebar />
+          {user && <Sidebar />}
           <Routes>
             <Route path="/" element={<AppRoute><EmailListPage /></AppRoute>} />
             <Route path="/mail" element={<AppRoute><MailPage /></AppRoute>} />

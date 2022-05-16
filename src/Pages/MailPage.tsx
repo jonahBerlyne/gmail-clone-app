@@ -5,10 +5,12 @@ import { ArrowBack, MoveToInbox, Error, Delete, Email, WatchLater, CheckCircle, 
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../Redux/hooks';
 import { selectOpenMail } from '../Redux/Slices/mailSlice';
+import { store } from "../Redux/store";
 
 export default function MailPage() {
 
   const selectedMail = useAppSelector(selectOpenMail);
+  console.log(store.getState());
   const navigate = useNavigate();
 
   return (
@@ -20,7 +22,6 @@ export default function MailPage() {
           <IconButton onClick={() => navigate("/")}><ArrowBack /></IconButton>
           <IconButton><MoveToInbox /></IconButton>
           <IconButton><Error /></IconButton>
-          <IconButton><Delete /></IconButton>
           <IconButton><Email /></IconButton>
           <IconButton><WatchLater /></IconButton>
           <IconButton><CheckCircle /></IconButton>
@@ -44,7 +45,7 @@ export default function MailPage() {
         </div>
 
         <div className="mail-message">
-          <p>{selectedMail?.description}</p>
+          <p>{selectedMail?.message}</p>
         </div>
       </div>
 

@@ -21,7 +21,8 @@ export default function SendMail() {
 
   const sendMail = async (formData: any): Promise<any> => {
    try {
-     const collectionRef = collection(fireDB, "emails");
+     dispatch(closeSendMessage());
+     const collectionRef = collection(fireDB, "email addresses", `${formData.to}`, "emails");
      const emailDoc = {
        "to": formData.to,
        "subject": formData.subject,
@@ -29,7 +30,6 @@ export default function SendMail() {
        "timestamp": serverTimestamp()
      };
      await addDoc(collectionRef, emailDoc);
-     dispatch(closeSendMessage());
    } catch (err) {
      alert(`Send mail error: ${err}`);
    }

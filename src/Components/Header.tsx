@@ -32,7 +32,7 @@ export default function Header() {
         <IconButton>
           <Notifications />
         </IconButton>
-        <Avatar src={user?.photoUrl} alt="Profile pic" />
+        <Avatar src={user?.photoUrl ? user?.photoUrl : user?.displayName[0]} alt="Profile pic" />
       </div>
 
     </div>
