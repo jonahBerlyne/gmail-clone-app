@@ -2,8 +2,13 @@ import React from 'react';
 import "../Styles/Header.css";
 import { IconButton, Avatar } from '@mui/material';
 import { Menu, Search, ArrowDropDown, Apps, Notifications } from "@mui/icons-material";
+import { useAppSelector } from '../Redux/hooks';
+import { selectUser } from '../Redux/Slices/userSlice';
 
 export default function Header() {
+
+  const user: any = useAppSelector(selectUser);
+
   return (
     <div className='header'>
 
@@ -27,7 +32,7 @@ export default function Header() {
         <IconButton>
           <Notifications />
         </IconButton>
-        <Avatar />
+        <Avatar src={user?.photoUrl} alt="Profile pic" />
       </div>
 
     </div>

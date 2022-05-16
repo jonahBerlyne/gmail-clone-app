@@ -1,14 +1,26 @@
 import React from 'react';
 import "../../Styles/Sidebar.css";
 import { Button, IconButton } from "@mui/material";
-import { Add, Inbox, Star, AccessTime, LabelImportant, NearMe, Note, ExpandMore, Person, Duo, Phone } from "@mui/icons-material";
+import { Add, Inbox, Star, AccessTime, LabelImportant, NearMe, Note, ExpandMore, Person, Duo, Phone, Logout } from "@mui/icons-material";
 import SidebarOption from "./SidebarOption";
 import { useAppDispatch } from '../../Redux/hooks';
 import { openSendMessage } from "../../Redux/Slices/mailSlice";
+import { logout } from "../../Redux/Slices/userSlice";
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebaseConfig';
 
 export default function Sidebar() {
 
   const dispatch = useAppDispatch();
+
+  const logOut = async (): Promise<any> => {
+    try {
+      dispatch(logout());
+      await signOut(auth);
+    } catch (err) {
+      alert(`Sign out error: ${err}`);
+    }
+  }
 
   return (
     <div className='sidebar'>
@@ -52,9 +64,13 @@ export default function Sidebar() {
         number={2}
       />
       <SidebarOption 
+        icon={<Logout />}
+        title="Sign out"
+        onClick={logOut}
+      />
+      <SidebarOption 
         icon={<ExpandMore />}
         title="More"
-        number={17}
       />
 
       <div className="sidebar-footer">
