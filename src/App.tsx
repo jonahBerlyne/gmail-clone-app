@@ -8,10 +8,12 @@ import EmailListPage from './Pages/EmailListPage';
 import MailPage from './Pages/MailPage';
 import SendMail from './Components/SendMail';
 import { selectSendMessageIsOpen } from "./Redux/Slices/mailSlice";
+import { selectUser } from './Redux/Slices/userSlice';
 
 export default function App() {
 
   const sendMessageIsOpen: boolean = useAppSelector(selectSendMessageIsOpen);
+  const user: any = useAppSelector(selectUser);
 
   return (
     <Router>
