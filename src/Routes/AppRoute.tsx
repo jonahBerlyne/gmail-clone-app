@@ -18,7 +18,11 @@ export default function AppRoute ({children}: {children: any}) {
    user => {
     if (user) {
       setCurrentUser(user);
-      dispatch(login({}));
+      dispatch(login({
+        email: user?.email,
+        name: user?.displayName,
+        photoUrl: user?.photoURL
+      }));
     } else {
       setCurrentUser(null);
     }

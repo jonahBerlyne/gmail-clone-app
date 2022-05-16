@@ -9,6 +9,9 @@ import MailPage from './Pages/MailPage';
 import SendMail from './Components/SendMail';
 import { selectSendMessageIsOpen } from "./Redux/Slices/mailSlice";
 import { selectUser } from './Redux/Slices/userSlice';
+import LoginPage from './Pages/LoginPage';
+import AppRoute from './Routes/AppRoute';
+import AuthRoute from './Routes/AuthRoute';
 
 export default function App() {
 
@@ -22,10 +25,11 @@ export default function App() {
         <div className="app-body">
           <Sidebar />
           <Routes>
-            <Route path="/" element={<EmailListPage />} />
-            <Route path="/mail" element={<MailPage />} />
+            <Route path="/" element={<AppRoute><EmailListPage /></AppRoute>} />
+            <Route path="/mail" element={<AppRoute><MailPage /></AppRoute>} />
+            <Route path="/login" element={<AuthRoute><LoginPage /></AuthRoute>} />
           </Routes>
-          {sendMessageIsOpen && <SendMail />}
+          {sendMessageIsOpen && user && <SendMail />}
         </div>
       </div>
     </Router>
