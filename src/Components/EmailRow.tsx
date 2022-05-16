@@ -3,6 +3,8 @@ import "../Styles/EmailRow.css";
 import { Checkbox, IconButton } from "@mui/material";
 import { StarBorderOutlined, LabelImportantOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from '../Redux/hooks';
+import { selectMail } from "../Redux/Slices/mailSlice";
 
 interface Row {
   title: string;
@@ -14,7 +16,20 @@ interface Row {
 
 export default function EmailRow({ title, subject, description, time, id }: Row) {
 
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const openMail = () => {
+    dispatch(
+      selectMail({
+        title, 
+        subject, 
+        description, 
+        time, 
+        id
+    }));
+    navigate("/mail");
+  }
 
   return (
     <div key={id} className='email-row' onClick={() => navigate("/mail")}>
