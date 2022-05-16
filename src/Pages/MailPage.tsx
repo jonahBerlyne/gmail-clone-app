@@ -3,13 +3,16 @@ import "../Styles/Mail.css";
 import { IconButton } from '@mui/material';
 import { ArrowBack, MoveToInbox, Error, Delete, Email, WatchLater, CheckCircle, LabelImportant, MoreVert, UnfoldMore, Print, ExitToApp } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../Redux/hooks';
+import { selectOpenMail } from '../Redux/Slices/mailSlice';
 
 export default function MailPage() {
 
+  const selectedMail = useAppSelector(selectOpenMail);
   const navigate = useNavigate();
 
   return (
-    <div className='mail'>
+    <div className='mail' key={selectedMail?.id}>
 
       <div className="mail-tools">
 
@@ -34,14 +37,14 @@ export default function MailPage() {
       
       <div className="mail-body">
         <div className="mail-body-header">
-          <h2>Subject</h2>
+          <h2>{selectedMail?.subject}</h2>
           <LabelImportant className="mail-important" />
-          <p>Title</p>
-          <p className='mail-time'>3pm</p>
+          <p>{selectedMail?.title}</p>
+          <p className='mail-time'>{selectedMail?.time}</p>
         </div>
 
         <div className="mail-message">
-          <p>Message</p>
+          <p>{selectedMail?.description}</p>
         </div>
       </div>
 

@@ -52,11 +52,18 @@ export default function SendMail() {
       {errors.subject && <p className="send-mail-error">Input required</p>}
       <input placeholder='Message...' className='send-mail-message' type="text" {...register("message", { required: true })} />
       {errors.message && <p className="send-mail-error">Input required</p>}
+      <div className="send-mail-options">
+        <Button 
+          className='send-mail-btn'
+          variant="contained"
+          color="primary"
+          type="submit"
+        >
+          Send
+        </Button>
+      </div>
      </form>
 
-     <div className="send-mail-options">
-      <Button className='send-mail-btn'>Send</Button>
-     </div>
 
     </div>
   );

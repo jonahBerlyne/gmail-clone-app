@@ -1,6 +1,8 @@
 .email-list {
  flex: 1;
  overflow: scroll;
+ -ms-overflow-style: none;
+ scrollbar-width: none;
 }
 
 .email-list-settings {
@@ -21,4 +23,12 @@
  background-color: white;
  border-bottom: 1px solid whitesmoke;
  z-index: 999;
+}
+
+.email-list-rows {
+ padding-bottom: 20%;
+}
+
+.email-list::-webkit-scrollbar {
+ display: none;
 }

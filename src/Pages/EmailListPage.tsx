@@ -90,6 +90,7 @@ export default function EmailListPage() {
               subject={email.subject}
               description={email.description}
               time={new Date(email.timestamp?.seconds*1000).toUTCString()}
+              key={email.id}
               id={email.id}
             />
           );
