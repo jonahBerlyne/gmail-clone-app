@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "../Styles/SendMail.css";
 import { Button } from "@mui/material";
 import { Close } from '@mui/icons-material';
@@ -10,23 +10,20 @@ import { addDoc, serverTimestamp, collection } from "firebase/firestore";
 
 export default function SendMail() {
 
+  const [to, setTo] = useState<string>("");
+  const [subject, setSubject] = useState<string>("");
+  const [msg, setMsg] = useState<string>("");
+
   const dispatch = useAppDispatch();
 
-  const {
-   register,
-   handleSubmit,
-   watch,
-   formState: { errors }
-  } = useForm();
-
-  const sendMail = async (formData: any): Promise<any> => {
+  const sendMail = async (to: string, subject: string, msg: string): Promise<any> => {
    try {
      dispatch(closeSendMessage());
-     const collectionRef = collection(fireDB, "email addresses", `${formData.to}`, "emails");
+     const collectionRef = collection(fireDB, "email addresses", `${to}`, "emails");
      const emailDoc = {
-       "to": formData.to,
-       "subject": formData.subject,
-       "message": formData.message,
+       to,
+       subject,
+       msg,
        "timestamp": serverTimestamp()
      };
      await addDoc(collectionRef, emailDoc);
@@ -45,24 +42,22 @@ export default function SendMail() {
       />
      </div>
 
-     <form onSubmit={handleSubmit(sendMail)}>
-      <input placeholder='To' type="text" {...register("to", { required: true })} />
-      {errors.to && <p className="send-mail-error">Input required</p>}
-      <input placeholder='Subject' type="text" {...register("subject", { required: true })} />
-      {errors.subject && <p className="send-mail-error">Input required</p>}
-      <input placeholder='Message...' className='send-mail-message' type="text" {...register("message", { required: true })} />
-      {errors.message && <p className="send-mail-error">Input required</p>}
+     <div className="send-mail-inputs">
+      <input placeholder='To' type="text" value={to} onChange={(e) => setTo(e.target.value)} maxLength={50} required />
+      <input placeholder='Subject' type="text" value={subject} onChange={(e) => setSubject(e.target.value)} maxLength={50} required />
+      <textarea placeholder='Message...' className='send-mail-message' value={msg} onChange={(e) => setMsg(e.target.value)} required />
       <div className="send-mail-options">
         <Button 
           className='send-mail-btn'
           variant="contained"
           color="primary"
-          type="submit"
+          onClick={() => sendMail(to, subject, msg)}
+          disabled={to === "" || subject === "" || msg === ""}
         >
           Send
         </Button>
       </div>
-     </form>
+     </div>
 
 
     </div>

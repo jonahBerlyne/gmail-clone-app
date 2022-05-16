@@ -88,7 +88,7 @@ export default function EmailListPage() {
             <EmailRow 
               title={email.title}
               subject={email.subject}
-              message={email.message}
+              msg={email.msg}
               time={new Date(email.timestamp?.seconds*1000).toUTCString()}
               key={email.id}
               id={email.id}

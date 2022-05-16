@@ -40,12 +40,11 @@ export default function MailPage() {
         <div className="mail-body-header">
           <h2>{selectedMail?.subject}</h2>
           <LabelImportant className="mail-important" />
-          <p>{selectedMail?.title}</p>
           <p className='mail-time'>{selectedMail?.time}</p>
         </div>
 
         <div className="mail-message">
-          <p>{selectedMail?.message}</p>
+          <p>{selectedMail?.msg}</p>
         </div>
       </div>
 

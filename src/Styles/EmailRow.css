@@ -35,7 +35,8 @@
  font-size: 13px;
 }
 
-.email-row-message > h4 {
+.email-row-message > h4,
+.email-row-description {
  width: 400px;
  white-space: nowrap;
  overflow: hidden;

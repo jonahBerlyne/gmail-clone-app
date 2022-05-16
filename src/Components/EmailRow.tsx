@@ -11,12 +11,12 @@ import fireDB, { auth } from '../firebaseConfig';
 interface Row {
   title: string;
   subject: string;
-  message: string;
+  msg: string;
   time: string;
   id?: any;
 }
 
-export default function EmailRow({ title, subject, message, time, id }: Row) {
+export default function EmailRow({ title, subject, msg, time, id }: Row) {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function EmailRow({ title, subject, message, time, id }: Row) {
       selectMail({
         title, 
         subject, 
-        message, 
+        msg, 
         time, 
         id
     }));
@@ -66,7 +66,7 @@ export default function EmailRow({ title, subject, message, time, id }: Row) {
 
       <div className="email-row-message">
         <h4>{subject}{""}</h4>
-        <span className="email-row-description">-{message}</span>
+        <span className="email-row-description">{msg}</span>
       </div>
 
       <p className="email-row-time">

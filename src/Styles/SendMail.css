@@ -4,7 +4,7 @@
  right: 50px;
  background-color: #404040;
  width: 40%;
- height: 40%;
+ height: 60%;
  max-width: 500px;
  border-top-left-radius: 10px;
  border-top-right-radius: 10px;
@@ -27,14 +27,14 @@
  font-size: 13px;
 }
 
-.send-mail > form {
+.send-mail-inputs {
  display: flex;
  flex: 1;
  flex-direction: column;
 }
 
-.send-mail > form > input {
- height: 30px;
+.send-mail-inputs > input,
+.send-mail-inputs > textarea {
  padding: 10px;
  border: none;
  border-bottom: 1px solid whitesmoke;
