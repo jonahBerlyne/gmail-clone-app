@@ -30,6 +30,7 @@ export default function LoginPage() {
         <Button
           variant="contained"
           color="primary"
+          data-testid="loginBtn"
           onClick={signIn}
           sx={{ fontWeight: 400 }}
         >
