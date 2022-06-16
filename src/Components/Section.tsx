@@ -5,10 +5,11 @@ interface SectionInterface {
   icon: any;
   title: string;
   color: string;
+  testId: number;
   selected?: boolean;
 };
 
-export default function Section({ icon, title, color, selected }: SectionInterface) {
+export default function Section({ icon, title, color, testId, selected }: SectionInterface) {
   return (
     <div 
       className={`section ${selected && "section-selected"}`} 
@@ -18,7 +19,7 @@ export default function Section({ icon, title, color, selected }: SectionInterfa
       }}
     >
       {icon}
-      <h4>{title}</h4>
+      <h4 data-testid={`sectionTitle${testId}`}>{title}</h4>
     </div>
   );
 }

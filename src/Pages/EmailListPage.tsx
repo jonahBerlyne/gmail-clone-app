@@ -69,17 +69,20 @@ export default function EmailListPage() {
           icon={<Inbox />}
           title="Primary"
           color="red"
+          testId={1}
           selected
         />
         <Section 
           icon={<People />}
           title="Social"
           color="#1A73E8"
+          testId={2}
         />
         <Section 
           icon={<LocalOffer />}
           title="Promotions"
           color="green"
+          testId={3}
         />
       </div>
 

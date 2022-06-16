@@ -7,14 +7,15 @@ interface Option {
   number?: number;
   selected?: boolean;
   onClick?: () => Promise<any>;
+  testId: number;
 };
 
-export default function SidebarOption({ icon, title, number, selected, onClick }: Option) {
+export default function SidebarOption({ icon, title, number, selected, onClick, testId }: Option) {
   return (
     <div className={`sidebar-option ${selected && "sidebar-option-active"}`} onClick={onClick}>
       {icon}
-      <h3>{title}</h3>
-      <p>{number}</p>
+      <h3 data-testid={`title${testId}`}>{title}</h3>
+      <p data-testid={`emails${testId}`}>{number}</p>
     </div>
   );
 }

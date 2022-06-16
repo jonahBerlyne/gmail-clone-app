@@ -10,11 +10,10 @@ import { store } from "../Redux/store";
 export default function MailPage() {
 
   const selectedMail = useAppSelector(selectOpenMail);
-  console.log(store.getState());
   const navigate = useNavigate();
 
   return (
-    <div className='mail' key={selectedMail?.id}>
+    <div data-testid="mail" className='mail' key={selectedMail?.id}>
 
       <div className="mail-tools">
 
@@ -39,13 +38,13 @@ export default function MailPage() {
       <div className="mail-body">
         <div className="mail-body-header">
           <div className="mail-body-header-info">
-            <h2>{selectedMail?.subject}</h2>
-            <p>{"<"}{selectedMail?.from}{">"}</p>
+            <h2 data-testid="mailSubj">{selectedMail?.subject}</h2>
+            <p data-testid="mailFrom">{"<"}{selectedMail?.from}{">"}</p>
           </div>
-          <p className='mail-time'>{selectedMail?.time}</p>
+          <p data-testid="mailTime" className='mail-time'>{selectedMail?.time}</p>
         </div>
 
-        <div className="mail-message">
+        <div data-testid="mailMsg" className="mail-message">
           <p>{selectedMail?.msg}</p>
         </div>
       </div>

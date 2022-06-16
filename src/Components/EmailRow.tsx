@@ -7,6 +7,7 @@ import { useAppDispatch } from '../Redux/hooks';
 import { selectMail } from "../Redux/Slices/mailSlice";
 import { deleteDoc, doc } from 'firebase/firestore';
 import fireDB, { auth } from '../firebaseConfig';
+import { getAuth } from 'firebase/auth';
 
 interface Row {
   from: string;
@@ -35,7 +36,7 @@ export default function EmailRow({ from, subject, msg, time, id }: Row) {
 
   const deleteEmail = async (): Promise<any> => {
     try {
-      const docRef = doc(fireDB, "email addresses", `${auth.currentUser?.email}`, "emails", `${id}`);
+      const docRef = doc(fireDB, "email addresses", `${getAuth().currentUser?.email}`, "emails", `${id}`);
       await deleteDoc(docRef);
     } catch (err) {
       alert(`Tweet deletion error: ${err}`);
@@ -57,13 +58,13 @@ export default function EmailRow({ from, subject, msg, time, id }: Row) {
           <Delete />
         </IconButton>
       </div>
-      <div className="email-row-message" onClick={openMail}>
-          <h3 className="email-row-from">
+      <div data-testid={`openMail${id}`} className="email-row-message" onClick={openMail}>
+          <h3 data-testid={`emailFrom${id}`} className="email-row-from">
             {from}
           </h3>
-          <h4>{subject}{""}</h4>
-          <span className="email-row-description">{msg}</span>
-          <p className="email-row-time">
+          <h4 data-testid={`subj${id}`}>{subject}{""}</h4>
+          <span data-testid={`msg${id}`} className="email-row-description">{msg}</span>
+          <p data-testid={`time${id}`} className="email-row-time">
             {time}
           </p>
       </div>

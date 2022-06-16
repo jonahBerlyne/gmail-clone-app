@@ -6,6 +6,7 @@ import { useAppDispatch } from '../Redux/hooks';
 import { closeSendMessage } from '../Redux/Slices/mailSlice';
 import fireDB, { auth } from "../firebaseConfig";
 import { addDoc, serverTimestamp, collection } from "firebase/firestore";
+import { getAuth } from 'firebase/auth';
 
 export default function SendMail() {
 
@@ -20,7 +21,7 @@ export default function SendMail() {
      dispatch(closeSendMessage());
      const collectionRef = collection(fireDB, "email addresses", `${to}`, "emails");
      const emailDoc = {
-       "from": auth.currentUser?.email,
+       "from": getAuth().currentUser?.email,
        to,
        subject,
        msg,
@@ -33,9 +34,9 @@ export default function SendMail() {
   }
 
   return (
-    <div className='send-mail'>
+    <div data-testid="sendMail" className='send-mail'>
      <div className="send-mail-header">
-      <h3>New Message</h3>
+      <h3 data-testid="newMsg">New Message</h3>
       <Close 
         className="send-mail-close" 
         onClick={() => dispatch(closeSendMessage())}
@@ -43,9 +44,9 @@ export default function SendMail() {
      </div>
 
      <div className="send-mail-inputs">
-      <input placeholder='To' type="text" value={to} onChange={(e) => setTo(e.target.value)} maxLength={50} required />
-      <input placeholder='Subject' type="text" value={subject} onChange={(e) => setSubject(e.target.value)} maxLength={50} required />
-      <textarea className='send-mail-message' value={msg} onChange={(e) => setMsg(e.target.value)} required />
+      <input data-testid="to" placeholder='To' type="text" value={to} onChange={(e) => setTo(e.target.value)} maxLength={50} required />
+      <input data-testid="subj" placeholder='Subject' type="text" value={subject} onChange={(e) => setSubject(e.target.value)} maxLength={50} required />
+      <textarea data-testid="msg" className='send-mail-message' value={msg} onChange={(e) => setMsg(e.target.value)} required />
       <div className="send-mail-options">
         <Button 
           className='send-mail-btn'

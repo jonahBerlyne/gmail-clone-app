@@ -40,40 +40,48 @@ export default function Sidebar() {
         title="Inbox"
         number={54}
         selected={true}
+        testId={1}
       />
       <SidebarOption 
         icon={<Star />}
         title="Starred"
         number={23}
+        testId={2}
       />
       <SidebarOption 
         icon={<AccessTime />}
         title="Snoozed"
         number={82}
+        testId={3}
       />
       <SidebarOption 
         icon={<LabelImportant />}
         title="Important"
         number={44}
+        testId={4}
       />
       <SidebarOption 
         icon={<NearMe />}
         title="Sent"
         number={5}
+        testId={5}
       />
       <SidebarOption 
         icon={<Note />}
         title="Drafts"
         number={2}
+        testId={6}
       />
       <SidebarOption 
         icon={<Logout />}
         title="Sign out"
         onClick={logOut}
+        testId={7}
       />
       <SidebarOption 
         icon={<ExpandMore />}
         title="More"
+        testId={8}
       />
 
       <div className="sidebar-footer">

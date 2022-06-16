@@ -13,11 +13,7 @@ jest.mock("../firebaseConfig", () => {
   };
 });
 
-jest.mock("firebase/auth", () => {
-  return {
-    getAuth: jest.fn()
-  };
-});
+jest.mock("firebase/auth");
 
 afterEach(done => {
   cleanup();
@@ -38,16 +34,17 @@ describe("Login Page", () => {
   expect(container).toMatchSnapshot();
  });
 
- it("should login user", async () => {
-  const mockAuth = ({
-   signInWithEmailAndPassword: jest.fn(),
-  } as unknown) as Auth;
-  (getAuth as jest.MockedFunction<typeof getAuth>).mockReturnValue(mockAuth);
+ it("should login user", () => {
 
-  const email = "example@example.com";
-  const password = "example";
+   const mockAuth = ({
+    signInWithEmailAndPassword: jest.fn(),
+   } as unknown) as Auth;
+   (getAuth as jest.MockedFunction<typeof getAuth>).mockReturnValue(mockAuth);
 
-  const Login = () => {
+   const email = "example@example.com";
+   const password = "example";
+   
+   const Login = () => {
 
     const loginUser = async () => await signInWithEmailAndPassword(getAuth(), email, password);
 
@@ -57,7 +54,6 @@ describe("Login Page", () => {
       </div>
     );
   }
-
 
   render(<Login />);
 
