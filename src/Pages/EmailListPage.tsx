@@ -6,13 +6,14 @@ import Section from "../Components/Section";
 import EmailRow from '../Components/EmailRow';
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import fireDB, { auth } from '../firebaseConfig';
+import { getAuth } from 'firebase/auth';
 
 export default function EmailListPage() {
 
   const [emails, setEmails] = useState<any[]>([]);
   
   useEffect(() => {
-    const q = query(collection(fireDB, "email addresses", `${auth.currentUser?.email}`, "emails"), orderBy("timestamp", "desc"));
+    const q = query(collection(fireDB, "email addresses", `${getAuth().currentUser?.email}`, "emails"), orderBy("timestamp", "desc"));
     const unsub = onSnapshot(q, snapshot => {
       let emailsArr: any[] = [];
       snapshot.docs.forEach(doc => {

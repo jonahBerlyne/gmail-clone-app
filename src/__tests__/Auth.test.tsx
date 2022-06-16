@@ -13,7 +13,11 @@ jest.mock("../firebaseConfig", () => {
   };
 });
 
-jest.mock("firebase/auth");
+jest.mock("firebase/auth", () => {
+  return {
+    getAuth: jest.fn()
+  };
+});
 
 afterEach(done => {
   cleanup();
