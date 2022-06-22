@@ -1,9 +1,9 @@
 import React from "react";
-import { render, screen, cleanup, fireEvent } from "@testing-library/react";
+import { render, screen, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import LoginPage from "../Pages/LoginPage";
 import { BrowserRouter as Router } from "react-router-dom";
-import { Auth, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { Auth, getAuth, signInWithEmailAndPassword, signInWithPopup, UserCredential } from "firebase/auth";
 import { Provider } from "react-redux";
 import { store } from "../Redux/store";
 
@@ -34,33 +34,30 @@ describe("Login Page", () => {
   expect(container).toMatchSnapshot();
  });
 
- it("should login user", () => {
+ it("should login user", async () => {
+  const mockCredential = ({
+   user: {
+    email: "example@example.com",
+    displayName: "example",
+    photoURL: "example.png"
+   }
+  } as unknown) as UserCredential;
 
-   const mockAuth = ({
-    signInWithEmailAndPassword: jest.fn(),
-   } as unknown) as Auth;
-   (getAuth as jest.MockedFunction<typeof getAuth>).mockReturnValue(mockAuth);
+  (signInWithPopup as jest.Mock).mockResolvedValue(mockCredential);
 
-   const email = "example@example.com";
-   const password = "example";
-   
-   const Login = () => {
+  render(
+   <Provider store={store}>
+    <Router>
+     <LoginPage />
+    </Router>
+   </Provider>
+  );
 
-    const loginUser = async () => await signInWithEmailAndPassword(getAuth(), email, password);
+  fireEvent.click(screen.getByTestId("loginBtn"));
 
-    return (
-      <div>
-        <button data-testid="loginBtn" onClick={() => loginUser()}></button>
-      </div>
-    );
-  }
-
-  render(<Login />);
-
-  const loginBtn = screen.getByTestId("loginBtn");
-  fireEvent.click(loginBtn);
-
-  expect(getAuth).toBeCalledTimes(1);
+  await waitFor(() => {
+    expect(signInWithPopup).toBeCalled();
+  });
  });
 
 });
