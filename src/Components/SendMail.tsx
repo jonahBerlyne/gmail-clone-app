@@ -49,6 +49,7 @@ export default function SendMail() {
       <textarea data-testid="msg" className='send-mail-message' value={msg} onChange={(e) => setMsg(e.target.value)} required />
       <div className="send-mail-options">
         <Button 
+          data-testid="sendMailBtn"
           className='send-mail-btn'
           variant="contained"
           color="primary"

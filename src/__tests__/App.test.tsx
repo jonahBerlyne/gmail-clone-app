@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { render, screen, cleanup, fireEvent } from "@testing-library/react";
+import { render, screen, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Auth, getAuth } from "firebase/auth";
@@ -12,6 +12,7 @@ import configureMockStore from "redux-mock-store";
 import thunk from 'redux-thunk';
 import Sidebar from "../Components/Sidebar/Sidebar";
 import SendMail from "../Components/SendMail";
+import { addDoc, collection, deleteDoc, doc, serverTimestamp } from "firebase/firestore";
 
 jest.mock("../firebaseConfig", () => {
   return {
@@ -110,7 +111,7 @@ describe("Mail", () => {
   expect(screen.getByTestId("sectionTitle3")).toHaveTextContent("Promotions");
  });
 
- it("renders the send mail component and changes its input values", () => {
+ it("renders the send mail component", () => {
 
   const { container } = render(
     <Provider store={store}>
@@ -123,91 +124,104 @@ describe("Mail", () => {
   fireEvent.change(screen.getByTestId("to"), {target: {value: "example@example.com"}});
   fireEvent.change(screen.getByTestId("subj"), {target: {value: "example subj"}});
   fireEvent.change(screen.getByTestId("msg"), {target: {value: "This is an example message."}});
+ });
 
+ it("changes the send mail component's input values and sends emails", async () => {
+
+  const mockAuth = ({
+   currentUser: {
+       uid: jest.fn().mockReturnValue("abc"),
+   }
+  } as unknown) as Auth;
+  (getAuth as jest.Mock).mockReturnValue(mockAuth);
+   
+  (collection as jest.Mock).mockReturnThis();
+  (serverTimestamp as jest.Mock).mockReturnThis();
+  (addDoc as jest.Mock).mockResolvedValue(this);
+   
+  render(
+     <Provider store={store}>
+      <SendMail />
+    </Provider>
+  );
+  
+  fireEvent.change(screen.getByTestId("to"), {target: {value: "example@example.com"}});
+  fireEvent.change(screen.getByTestId("subj"), {target: {value: "example subj"}});
+  fireEvent.change(screen.getByTestId("msg"), {target: {value: "This is an example message."}});
+  
   expect(screen.getByTestId("to")).toHaveValue("example@example.com");
   expect(screen.getByTestId("subj")).toHaveValue("example subj");
   expect(screen.getByTestId("msg")).toHaveValue("This is an example message.");
+  
+  fireEvent.click(screen.getByTestId("sendMailBtn"));
+
+  await waitFor(() => {
+    expect(addDoc).toBeCalled();
+  });
  });
 
- let emails: any[] = [];
+ let emails: any[] = [
+  {
+   from: "example@example.com",
+   id: 1,
+   msg: "This is an example msg.",
+   subject: "example",
+   time: "05/07/2022"
+  },
+  {
+   from: "example2@example2.com",
+   id: 2,
+   msg: "This is another example msg.",
+   subject: "example2",
+   time: "07/09/2022"
+  },
+ ];
 
- it("sends emails", () => {
-
-   const EmailScreen = () => {
-
-     const [to, setTo] = useState<string>("");
-     const [subject, setSubject] = useState<string>("");
-     const [msg, setMsg] = useState<string>("");
-
-     const [month, setMonth] = useState<number>(3);
-     const [day, setDay] = useState<number>(5);
-
-     const [id, setId] = useState<number>(1);
-     
-     const sendEmail = () => {
-       const time: string = `0${month}/0${day}/2022`;
-       const emailDoc = {
-         from: to,
-         subject,
-         msg,
-         time,
-         id
-       };
-       emails.push(emailDoc);
-       setMonth(month + 2);
-       setDay(day + 2);
-       setId(id + 1);
-     }
-
-     return (
-       <>
-        <input data-testid="to" value={to} onChange={(e) => setTo(e.target.value)} />
-        <input data-testid="subj" value={subject} onChange={(e) => setSubject(e.target.value)} />
-        <textarea data-testid="msg" value={msg} onChange={(e) => setMsg(e.target.value)} />
-        <button data-testid="sendBtn" onClick={() => sendEmail()}></button>
-       </>
-     );
-   }
-
-   const { rerender } = render(<EmailScreen />);
-
-   fireEvent.change(screen.getByTestId("to"), {target: {value: "example@example.com"}});
-   fireEvent.change(screen.getByTestId("subj"), {target: {value: "example subj"}});
-   fireEvent.change(screen.getByTestId("msg"), {target: {value: "This is an example message."}});
-   fireEvent.click(screen.getByTestId("sendBtn"));
-
-   expect(emails).toHaveLength(1);
-
-   rerender(<EmailScreen />);
-
-   fireEvent.change(screen.getByTestId("to"), {target: {value: "example2@example2.com"}});
-   fireEvent.change(screen.getByTestId("subj"), {target: {value: "example subj 2"}});
-   fireEvent.change(screen.getByTestId("msg"), {target: {value: "This is another example message."}});
-   fireEvent.click(screen.getByTestId("sendBtn"));
-
-   expect(emails).toHaveLength(2);
- });
+ const Emails = () => {
+  return (
+   <>
+    {emails.map(email => {
+      return (
+       <EmailRow 
+        from={email.from}
+        subject={email.subject}
+        msg={email.msg}
+        time={email.time}
+        key={email.id}
+        id={email.id}
+       />
+      );
+    })}
+   </>
+  );
+ }
 
  it("displays the email row's text values", () => {
 
-  const Emails = () => {
-   return (
-    <>
-     {emails.map(email => {
-       return (
-        <EmailRow 
-         from={email.from}
-         subject={email.subject}
-         msg={email.msg}
-         time={email.time}
-         key={email.id}
-         id={email.id}
-        />
-       );
-     })}
-    </>
-   );
-  }
+  const {container} = render(
+   <Provider store={store}>
+    <Router>
+     <Emails />
+    </Router>
+   </Provider>
+  );
+
+  expect(container).toMatchSnapshot();
+  expect(screen.getByTestId("emailFrom2")).toHaveTextContent("example2@example2.com");
+  expect(screen.getByTestId("subj1")).toHaveTextContent("example");
+  expect(screen.getByTestId("msg2")).toHaveTextContent("This is another example msg.");
+  expect(screen.getByTestId("time1")).toHaveTextContent("05/07/2022");
+ });
+
+ it("deletes an email", async () => {
+  const mockAuth = ({
+   currentUser: {
+       email: jest.fn().mockReturnValue("example@example.com"),
+   }
+  } as unknown) as Auth;
+  (getAuth as jest.Mock).mockReturnValue(mockAuth);
+  (doc as jest.Mock).mockReturnThis();
+  (deleteDoc as jest.Mock).mockResolvedValue(this);
 
   render(
    <Provider store={store}>
@@ -217,10 +231,12 @@ describe("Mail", () => {
    </Provider>
   );
 
-  expect(screen.getByTestId("emailFrom1")).toHaveTextContent("example@example.com");
-  expect(screen.getByTestId("subj2")).toHaveTextContent("example subj 2");
-  expect(screen.getByTestId("msg1")).toHaveTextContent("This is an example message.");
-  expect(screen.getByTestId("time2")).toHaveTextContent("05/07/2022");
+  fireEvent.click(screen.getByTestId("deleteEmailBtn1"));
+
+  await waitFor(() => {
+    expect(deleteDoc).toBeCalled();
+  });
+
  });
 
  it("renders the mail page and displays the mail page's text values", () => {
@@ -245,9 +261,9 @@ describe("Mail", () => {
   );
 
   expect(container).toMatchSnapshot();
-  expect(screen.getByTestId("mailSubj")).toHaveTextContent("example subj 2");
+  expect(screen.getByTestId("mailSubj")).toHaveTextContent("example2");
   expect(screen.getByTestId("mailFrom")).toHaveTextContent("<example2@example2.com>");
-  expect(screen.getByTestId("mailTime")).toHaveTextContent("05/07/2022");
-  expect(screen.getByTestId("mailMsg")).toHaveTextContent("This is another example message.");
+  expect(screen.getByTestId("mailTime")).toHaveTextContent("07/09/2022");
+  expect(screen.getByTestId("mailMsg")).toHaveTextContent("This is another example msg.");
  });
 });

@@ -54,7 +54,7 @@ export default function EmailRow({ from, subject, msg, time, id }: Row) {
         <IconButton>
           <LabelImportantOutlined />
         </IconButton>
-        <IconButton onClick={deleteEmail}>
+        <IconButton data-testid={`deleteEmailBtn${id}`}  onClick={deleteEmail}>
           <Delete />
         </IconButton>
       </div>
