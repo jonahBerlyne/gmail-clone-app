@@ -17,3 +17,32 @@
  object-fit: contain;
  height: 100px;
 }
+
+@media screen and (max-width: 1024px) {
+ .login {
+  margin-left: 25%;
+ }
+}
+
+@media screen and (max-width: 768px) {
+ .login {
+  margin-left: 5%;
+  padding-left: 0px;
+ }
+}
+
+@media screen and (max-width: 464px) {
+ .login {
+  margin-left: 20%;
+ }
+
+ .login-container > img {
+  height: 65px;
+ }
+}
+
+@media screen and (max-width: 375px) {
+ .login {
+  margin-left: 7%;
+ }
+}
