@@ -16,6 +16,11 @@
  padding-right: 10px;
 }
 
+.email-list-settings-header,
+.email-list-settings-msg {
+ display: none;
+}
+
 .email-list-sections {
  position: sticky;
  top: 0;
@@ -31,4 +36,20 @@
 
 .email-list::-webkit-scrollbar {
  display: none;
+}
+
+@media screen and (max-width: 795px) {
+ .email-list-settings-right,
+ .email-list-sections {
+  display: none;
+ }
+
+ .email-list-settings-header,
+ .email-list-settings-msg {
+  display: flex;
+ }
+
+ .email-list-settings {
+  align-items: center;
+ }
 }

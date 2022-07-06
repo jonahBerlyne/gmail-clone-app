@@ -66,3 +66,9 @@
  display: flex;
  justify-content: center;
 }
+
+@media screen and (max-width: 795px) {
+ .sidebar {
+  display: none;
+ }
+}

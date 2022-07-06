@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import "../Styles/EmailList.css";
 import { Checkbox, IconButton } from '@mui/material';
-import { ArrowDropDown, Redo, MoreVert, ChevronLeft, ChevronRight, KeyboardHide, Settings, Inbox, People, LocalOffer } from '@mui/icons-material';
+import { ArrowDropDown, Redo, MoreVert, ChevronLeft, ChevronRight, KeyboardHide, Settings, Inbox, People, LocalOffer, Create } from '@mui/icons-material';
 import Section from "../Components/Section";
 import EmailRow from '../Components/EmailRow';
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
-import fireDB, { auth } from '../firebaseConfig';
+import fireDB from '../firebaseConfig';
 import { getAuth } from 'firebase/auth';
+import { useAppDispatch } from '../Redux/hooks';
+import { openSendMessage } from '../Redux/Slices/mailSlice';
 
 export default function EmailListPage() {
 
@@ -28,6 +30,8 @@ export default function EmailListPage() {
     return unsub;
   }, []);
 
+  const dispatch = useAppDispatch();
+
   return (
     <div className='email-list'>
 
@@ -45,6 +49,16 @@ export default function EmailListPage() {
 
           <IconButton>
             <MoreVert />
+          </IconButton>
+        </div>
+
+        <div className="email-list-settings-header">
+          <p>Primary</p>
+        </div>
+
+        <div className="email-list-settings-msg">
+          <IconButton onClick={() => dispatch(openSendMessage())}>
+            <Create />
           </IconButton>
         </div>
 
