@@ -48,13 +48,13 @@ export default function Sidebar() {
       <SidebarOption 
         icon={<LabelImportant />}
         title="Important"
-        number={44}
+        number={4}
         testId={4}
       />
       <SidebarOption 
         icon={<NearMe />}
         title="Sent"
-        number={5}
+        number={77}
         testId={5}
       />
       <SidebarOption 
