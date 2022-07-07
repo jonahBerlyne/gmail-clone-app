@@ -17,7 +17,8 @@
 }
 
 .email-list-settings-header,
-.email-list-settings-msg {
+.email-list-settings-msg,
+.email-list-settings-signout {
  display: none;
 }
 
@@ -44,12 +45,43 @@
   display: none;
  }
 
+ .email-list-settings-header {
+  font-family: 'Heebo', sans-serif;
+  text-align: center;
+ }
+
  .email-list-settings-header,
  .email-list-settings-msg {
   display: flex;
  }
 
+ .email-list-settings-msg > .MuiIconButton-root {
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+  padding: 2.5px;
+ }
+
+ .email-list-settings-msg > .MuiIconButton-root:hover {
+  background-color: red;
+ }
+
  .email-list-settings {
   align-items: center;
+ }
+}
+
+@media screen and (max-width: 425px) {
+ .email-list-settings {
+  background-color: whitesmoke;
+  padding-bottom: 2.5px;
+ }
+
+ .email-list-settings-left-icons {
+  display: none;
+ }
+
+ .email-list-settings-signout {
+  display: flex;
  }
 }

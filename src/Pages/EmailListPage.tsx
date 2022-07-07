@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import "../Styles/EmailList.css";
 import { Checkbox, IconButton } from '@mui/material';
-import { ArrowDropDown, Redo, MoreVert, ChevronLeft, ChevronRight, KeyboardHide, Settings, Inbox, People, LocalOffer, Create } from '@mui/icons-material';
+import { ArrowDropDown, Redo, MoreVert, ChevronLeft, ChevronRight, KeyboardHide, Settings, Inbox, People, LocalOffer, Create, Logout } from '@mui/icons-material';
 import Section from "../Components/Section";
 import EmailRow from '../Components/EmailRow';
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
-import fireDB from '../firebaseConfig';
-import { getAuth } from 'firebase/auth';
+import fireDB, { auth } from '../firebaseConfig';
+import { getAuth, signOut } from 'firebase/auth';
 import { useAppDispatch } from '../Redux/hooks';
 import { openSendMessage } from '../Redux/Slices/mailSlice';
+import { logout } from '../Redux/Slices/userSlice';
 
 export default function EmailListPage() {
 
@@ -17,39 +18,58 @@ export default function EmailListPage() {
   useEffect(() => {
     const q = query(collection(fireDB, "email addresses", `${getAuth().currentUser?.email}`, "emails"), orderBy("timestamp", "desc"));
     const unsub = onSnapshot(q, snapshot => {
-      let emailsArr: any[] = [];
-      snapshot.docs.forEach(doc => {
-        const emailDoc = {
-          ...doc.data(),
-          id: doc.id
-        };
-        emailsArr.push(emailDoc);
-      });
-      setEmails(emailsArr);
+      if (!snapshot.metadata.hasPendingWrites) {
+        let emailsArr: any[] = [];
+        snapshot.docs.forEach(doc => {
+          const emailDoc = {
+            ...doc.data(),
+            id: doc.id
+          };
+          emailsArr.push(emailDoc);
+        });
+        console.log(emailsArr);
+        setEmails(emailsArr);
+      }
     });
     return unsub;
   }, []);
 
   const dispatch = useAppDispatch();
 
+  const logOut = async (): Promise<any> => {
+    try {
+      dispatch(logout());
+      await signOut(auth);
+    } catch (err) {
+      alert(`Sign out error: ${err}`);
+    }
+  }
+
   return (
     <div className='email-list'>
 
       <div className="email-list-settings">
         <div className="email-list-settings-left">
-          <Checkbox />
+          <div className="email-list-settings-left-icons">          
+            <Checkbox />
 
-          <IconButton>
-            <ArrowDropDown />
-          </IconButton>
+            <IconButton>
+              <ArrowDropDown />
+            </IconButton>
 
-          <IconButton>
-            <Redo />
-          </IconButton>
+            <IconButton>
+              <Redo />
+            </IconButton>
 
-          <IconButton>
-            <MoreVert />
-          </IconButton>
+            <IconButton>
+              <MoreVert />
+            </IconButton>
+          </div>
+          <div className="email-list-settings-signout">
+            <IconButton onClick={() => logOut()}>
+              <Logout />
+            </IconButton>
+          </div>
         </div>
 
         <div className="email-list-settings-header">

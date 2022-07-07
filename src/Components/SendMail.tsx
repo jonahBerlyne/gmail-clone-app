@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 import { Close } from '@mui/icons-material';
 import { useAppDispatch } from '../Redux/hooks';
 import { closeSendMessage } from '../Redux/Slices/mailSlice';
-import fireDB, { auth } from "../firebaseConfig";
+import fireDB from "../firebaseConfig";
 import { addDoc, serverTimestamp, collection } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 
@@ -18,6 +18,7 @@ export default function SendMail() {
 
   const sendMail = async (to: string, subject: string, msg: string): Promise<any> => {
    try {
+     const timestamp = serverTimestamp();
      dispatch(closeSendMessage());
      const collectionRef = collection(fireDB, "email addresses", `${to}`, "emails");
      const emailDoc = {
@@ -25,7 +26,7 @@ export default function SendMail() {
        to,
        subject,
        msg,
-       "timestamp": serverTimestamp()
+       timestamp
      };
      await addDoc(collectionRef, emailDoc);
    } catch (err) {

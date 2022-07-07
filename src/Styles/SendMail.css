@@ -63,3 +63,20 @@
  text-align: right;
  padding: 2px;
 }
+
+@media screen and (max-width: 795px) {
+ .send-mail {
+  width: 50%;
+ }
+}
+
+@media screen and (max-width: 425px) {
+ .send-mail {
+  position: none;
+  top: 0px;
+  right: 0px;
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+ }
+}
