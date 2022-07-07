@@ -67,7 +67,7 @@
  justify-content: center;
 }
 
-@media screen and (max-width: 795px) {
+@media screen and (max-width: 1260px) {
  .sidebar {
   display: none;
  }

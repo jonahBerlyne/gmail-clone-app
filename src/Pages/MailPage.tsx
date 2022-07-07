@@ -4,8 +4,7 @@ import { IconButton } from '@mui/material';
 import { ArrowBack, MoveToInbox, Error, Delete, Email, WatchLater, CheckCircle, LabelImportant, MoreVert, UnfoldMore, Print, ExitToApp } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../Redux/hooks';
-import { selectOpenMail } from '../Redux/Slices/mailSlice';
-import { store } from "../Redux/store";
+import { selectOpenMail } from '../Redux/Slices/mailSlice'; 
 
 export default function MailPage() {
 
@@ -41,7 +40,9 @@ export default function MailPage() {
             <h2 data-testid="mailSubj">{selectedMail?.subject}</h2>
             <p data-testid="mailFrom">{"<"}{selectedMail?.from}{">"}</p>
           </div>
-          <p data-testid="mailTime" className='mail-time'>{selectedMail?.time}</p>
+          <div className='mail-time'>          
+            <p data-testid="mailTime">{selectedMail?.time}</p>
+          </div>
         </div>
 
         <div data-testid="mailMsg" className="mail-message">
