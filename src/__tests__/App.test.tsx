@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { render, screen, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -61,11 +61,10 @@ describe("Sidebar", () => {
     expect(screen.getByTestId("title1")).toHaveTextContent("Inbox");
     expect(screen.getByTestId("emails2")).toHaveTextContent("23");
     expect(screen.getByTestId("title3")).toHaveTextContent("Snoozed");
-    expect(screen.getByTestId("emails4")).toHaveTextContent("44");
+    expect(screen.getByTestId("emails4")).toHaveTextContent("4");
     expect(screen.getByTestId("title5")).toHaveTextContent("Sent");
     expect(screen.getByTestId("emails6")).toHaveTextContent("2");
-    expect(screen.getByTestId("title7")).toHaveTextContent("Sign out");
-    expect(screen.getByTestId("title8")).toHaveTextContent("More");
+    expect(screen.getByTestId("title7")).toHaveTextContent("More");
   });
 });
 
@@ -93,7 +92,7 @@ describe("Mail", () => {
  it("displays the section titles", () => {
   const mockAuth = ({
    currentUser: {
-       uid: jest.fn().mockReturnValue("abc"),
+       uid: "abc",
    }
   } as unknown) as Auth;
   (getAuth as jest.Mock).mockReturnValue(mockAuth);
@@ -130,7 +129,7 @@ describe("Mail", () => {
 
   const mockAuth = ({
    currentUser: {
-       uid: jest.fn().mockReturnValue("abc"),
+       uid: "abc",
    }
   } as unknown) as Auth;
   (getAuth as jest.Mock).mockReturnValue(mockAuth);
