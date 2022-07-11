@@ -39,6 +39,11 @@
  gap: 20px;
 }
 
+.email-row-message-left > h3 {
+ white-space: nowrap;
+ text-overflow: ellipsis;
+}
+
 .email-row-message-left > h4,
 .email-row-message-left > span {
  width: 400px;
